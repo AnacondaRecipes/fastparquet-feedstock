@@ -26,7 +26,7 @@ requirements:
   run:
     - python
     - pandas
-    - numpy >=1.11
+    - {{ pin_compatible('numpy') }}
     - numba >=0.28
     - thrift >=0.10
     - pytest

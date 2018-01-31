@@ -1,48 +1,63 @@
 {% set name = "fastparquet" %}
-{% set version = "0.1.3" %}
-{% set fn_suffix = "0.1.3.tar.gz" %}
-{% set sha256 = "ff7f28f0fe580919a55a9e98710c431ba002163106043b1fcde013bf9013feb8" %}
+{% set version = "0.1.4" %}
+{% set fn_suffix = ".tar.gz" %}
+{% set sha256 = "8b28b7fc00854f6546ae7c46961f3c0303224be57ac01f57aa507acd89242bd5" %}
 
 package:
   name: {{ name }}
-  version: "{{ version }}"
+  version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ fn_suffix }}
-  url: https://pypi.io/packages/source/f/{{ name }}/{{ name }}-{{ fn_suffix }}
-  sha256: "{{ sha256 }}"
+  fn: {{  name }}-{{ version }}{{ fn_suffix }}
+  url: https://github.com/dask/fastparquet/archive/{{ version }}{{ fn_suffix }}
+  sha256: {{ sha256 }}
+  patches:
+    - 0001-move-pytest-runner-to-test-deps.patch
 
-build:
-  number: 0
-  script: python setup.py install --single-version-externally-managed --record record.txt
+outputs:
+  - name: fastparquet-test-data
+    script: install_test_data.sh
+    build:
+      noarch: generic
+  - name: fastparquet
+    build:
+      script: python setup.py install --single-version-externally-managed --record record.txt
 
-requirements:
-  host:
-    - {{ compiler('c') }}
-    - python
-    - setuptools
-    - cython
-    - numpy
-  run:
-    - python
-    - pandas
-    - {{ pin_compatible('numpy') }}
-    - numba >=0.28
-    - thrift >=0.10
-    - pytest
-    - cython
+    requirements:
+      build:
+        - {{ compiler('c') }}
+      host:
+        - python
+        - setuptools
+        - cython
+        - numpy
+        - python-snappy
+      run:
+        - python
+        - pandas
+        - {{ pin_compatible('numpy') }}
+        - numba >=0.28
+        - thrift >=0.10
+        - python-snappy
+        - cython
 
-test:
-  imports:
-    - fastparquet
+    test:
+      imports:
+        - fastparquet
+      requires:
+        - pytest
+        - pytest-runner
+        - {{ pin_subpackage('fastparquet-test-data', exact=True) }}
+      source_files:
+        - fastparquet/test
 
-about:
-  home: http://github.com/martindurant/fastparquet
-  license: BSD-3
-  license_family: 'BSD'
-  license_file: LICENSE
-  summary: 'Python interface to the parquet format'
-  dev_url: https://github.com/martindurant/fastparquet
+    about:
+      home: http://github.com/martindurant/fastparquet
+      license: BSD-3
+      license_family: 'BSD'
+      license_file: LICENSE
+      summary: 'Python interface to the parquet format'
+      dev_url: https://github.com/martindurant/fastparquet
 
 extra:
   recipe-maintainers:

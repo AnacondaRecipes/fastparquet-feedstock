@@ -1,0 +1,30 @@
+From 3e5722d0ffc3ee66a6d381950c0098b550b740bc Mon Sep 17 00:00:00 2001
+From: "msarahan@gmail.com" <msarahan@gmail.com>
+Date: Tue, 30 Jan 2018 19:30:06 +0000
+Subject: [PATCH] move pytest-runner to test deps
+
+---
+ setup.py | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/setup.py b/setup.py
+index 76285e2..9e5d751 100644
+--- a/setup.py
++++ b/setup.py
+@@ -69,12 +69,9 @@ setup(
+     packages=['fastparquet'],
+     cmdclass={'build_ext':build_ext},
+     install_requires=install_requires,
+-    setup_requires=[
+-        'pytest-runner',
+-        [p for p in install_requires if p.startswith('numpy')][0]
+-    ],
+     tests_require=[
+         'pytest',
++        'pytest-runner',
+         'python-snappy',
+         'lz4 >= 0.19.1',
+     ],
+-- 
+2.15.0
+

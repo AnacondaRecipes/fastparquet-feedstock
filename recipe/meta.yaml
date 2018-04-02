@@ -22,7 +22,7 @@ requirements:
     - python
     - setuptools
     - cython
-    - numpy
+    - numpy 1.11.*
     - pytest-runner
   run:
     - python

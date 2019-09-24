@@ -1,6 +1,6 @@
 {% set name = "fastparquet" %}
-{% set version = "0.3.0" %}
-{% set sha256 = "cab1de69c2f941c1e56b70933ed981d3577e176b3fbcd699b3b2d0b09363885c" %}
+{% set version = "0.3.2" %}
+{% set sha256 = "d81dcec444f4c4829234b9baac57c7125b8fbe9119c2eca2dee922650db49205" %}
 
 package:
   name: {{ name }}
@@ -12,15 +12,18 @@ source:
 
 build:
   number: 0
-  script: python setup.py install --single-version-externally-managed --record record.txt
+  script:
+    - del fastparquet\*.c  # [win]
+    - rm fastparquet/*.c   # [unix]
+    - "{{ PYTHON }} -m pip install . --no-deps -vv "
 
 requirements:
   build:
     - {{ compiler('c') }}
   host:
     - python
-    - setuptools
     - cython
+    - pip
     - numpy
     - pytest-runner
   run:

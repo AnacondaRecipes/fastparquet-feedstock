@@ -1,6 +1,6 @@
 {% set name = "fastparquet" %}
-{% set version = "0.5.0" %}
-{% set sha256 = "3b558059327dce2c73a775aa2f2029e052fcf6e61880e15681e04ede5f0f20b7" %}
+{% set version = "0.7.1" %}
+{% set sha256 = "3b8906f3aa94539e2849927fae572c93d9ed229ecf39032f0a42b47e06dfb569" %}
 
 package:
   name: {{ name }}

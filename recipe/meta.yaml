@@ -47,11 +47,12 @@ test:
     - pip check || exit 0  # [win]
   requires:
     - pip
+    - numpy <1.22
 
 about:
   home: https://github.com/dask/fastparquet
-  license: BSD-3-Clause
-  license_family: BSD
+  license: Apache-2.0
+  license_family: Apache
   license_file: LICENSE
   summary: 'Python interface to the parquet format'
   dev_url: https://github.com/dask/fastparquet

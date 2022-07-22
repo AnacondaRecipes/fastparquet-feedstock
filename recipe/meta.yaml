@@ -4,18 +4,21 @@
 
 package:
   name: {{ name }}
-  version: "{{ version }}"
+  version: {{ version }}
 
 source:
   url: https://pypi.io/packages/source/f/{{ name }}/{{ name }}-{{ version  }}.tar.gz
-  sha256: "{{ sha256 }}"
+  sha256: {{ sha256 }}
 
 build:
-  number: 1
+  number: 2
+  # Currently it's not available on s390x:
+  # There is a missing numba package.
+  skip: True  # [py<36 or s390x]
   script:
     - del fastparquet\*.c  # [win]
     - rm fastparquet/*.c   # [unix]
-    - "{{ PYTHON }} -m pip install . --no-deps -vv "
+    - {{ PYTHON }} -m pip install . --no-deps -vv
 
 requirements:
   build:
@@ -23,33 +26,42 @@ requirements:
   host:
     - python
     - cython
+    - numba
+    - numpy
+    - packaging
     - pandas
     - pip
-    - setuptools
-    - numpy
     - pytest-runner
-    - numba
-    - packaging
-    - thrift 0.11
+    - setuptools
+    - thrift >=0.11
   run:
     - python
-    - pandas >=0.19
-    - numpy
+    - numba >=0.49
     - packaging
-    - numba >=0.28
-    - thrift 0.11
+    - pandas >=1.1.0
+    - {{ pin_compatible('numpy') }}
+    - thrift >=0.11
+  run_constrained:
+    # numpy has a hard upper limit currently for numba 0.55.1
+    - numpy >=1.18,<1.22
 
 test:
   imports:
     - fastparquet
+  commands:
+    - pip check || true    # [not win]
+    - pip check || exit 0  # [win]
+  requires:
+    - pip
 
 about:
-  home: http://github.com/dask/fastparquet
-  license: BSD-3
-  license_family: 'BSD'
+  home: https://github.com/dask/fastparquet
+  license: Apache-2.0
+  license_family: Apache
   license_file: LICENSE
   summary: 'Python interface to the parquet format'
   dev_url: https://github.com/dask/fastparquet
+  doc_url: https://github.com/dask/fastparquet/blob/main/docs/source/quickstart.rst
 
 extra:
   recipe-maintainers:

@@ -38,6 +38,9 @@ requirements:
     - pandas >=1.1.0
     - {{ pin_compatible('numpy') }}
     - thrift >=0.11
+  run_constrained:
+    # numpy has a hard upper limit currently for numba 0.55.1
+    - numpy >=1.18,<1.22
 
 test:
   imports:
@@ -47,7 +50,6 @@ test:
     - pip check || exit 0  # [win]
   requires:
     - pip
-    - numpy <1.22
 
 about:
   home: https://github.com/dask/fastparquet

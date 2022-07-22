@@ -14,7 +14,7 @@ build:
   number: 2
   # Currently it's not available on s390x:
   # There is a missing numba package.
-  skip: True  # [py<37 or s390x]
+  skip: True  # [py<36 or s390x]
   script:
     - del fastparquet\*.c  # [win]
     - rm fastparquet/*.c   # [unix]

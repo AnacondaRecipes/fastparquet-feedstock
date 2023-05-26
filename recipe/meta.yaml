@@ -21,6 +21,7 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
+    - git  # [not win]
   host:
     - python
     - pip

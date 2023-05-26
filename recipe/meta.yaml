@@ -16,7 +16,7 @@ build:
   script:
     - del fastparquet\*.c  # [win]
     - rm fastparquet/*.c   # [unix]
-    - "{{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv "
+    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   build:
@@ -60,7 +60,7 @@ about:
     It provides several advantages relevant to big-data processing.
 
   dev_url: https://github.com/dask/fastparquet
-  doc_url: https://fastparquet.readthedocs.io/en/latest/
+  doc_url: https://fastparquet.readthedocs.io
 
 extra:
   recipe-maintainers:

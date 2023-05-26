@@ -1,6 +1,5 @@
 {% set name = "fastparquet" %}
-{% set version = "0.5.0" %}
-{% set sha256 = "3b558059327dce2c73a775aa2f2029e052fcf6e61880e15681e04ede5f0f20b7" %}
+{% set version = "2023.4.0" %}
 
 package:
   name: {{ name }}
@@ -8,51 +7,46 @@ package:
 
 source:
   url: https://pypi.io/packages/source/f/{{ name }}/{{ name }}-{{ version  }}.tar.gz
-  sha256: {{ sha256 }}
+  sha256: 917e6d288ea07e10b28b5fa4b4c0b70f60b14971ece3ba5bf30690320a53aa70
 
 build:
-  number: 2
-  # Currently it's not available on s390x:
-  # There is a missing numba package.
-  skip: True  # [py<36 or s390x]
+  number: 0
+  #skip s390x because of lack of cramjam and numba
+  skip: true  # [py<38 or s390x]
   script:
     - del fastparquet\*.c  # [win]
     - rm fastparquet/*.c   # [unix]
-    - {{ PYTHON }} -m pip install . --no-deps -vv
+    - "{{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv "
 
 requirements:
   build:
     - {{ compiler('c') }}
   host:
     - python
-    - cython
-    - numba
-    - numpy
-    - packaging
-    - pandas
     - pip
-    - pytest-runner
+    - packaging
+    - wheel
     - setuptools
-    - thrift >=0.11
+    - numpy 
+    - setuptools-scm 7.0.4
+    - cython 0.29.32
+    - pandas 1.5.2
+    - pytest-runner 6.0.0
   run:
     - python
-    - numba >=0.49
-    - packaging
-    - pandas >=1.1.0
+    - {{ pin_compatible('pandas') }}
     - {{ pin_compatible('numpy') }}
-    - thrift >=0.11
-  run_constrained:
-    # numpy has a hard upper limit currently for numba 0.55.1
-    - numpy >=1.18,<1.22
+    - cramjam >=2.3.0
+    - fsspec
+    - packaging
 
 test:
   imports:
     - fastparquet
-  commands:
-    - pip check || true    # [not win]
-    - pip check || exit 0  # [win]
   requires:
     - pip
+  commands:
+    - pip check
 
 about:
   home: https://github.com/dask/fastparquet
@@ -60,8 +54,14 @@ about:
   license_family: Apache
   license_file: LICENSE
   summary: 'Python interface to the parquet format'
+  description: |
+    The fastparquet is a python implementation of the parquet format, aiming integrate into python-based big data work-flows. 
+    It is used implicitly by the projects Dask, Pandas and intake-parquet. 
+    The Parquet format is a common binary data store, used particularly in the Hadoop/big-data sphere. 
+    It provides several advantages relevant to big-data processing.
+
   dev_url: https://github.com/dask/fastparquet
-  doc_url: https://github.com/dask/fastparquet/blob/main/docs/source/quickstart.rst
+  doc_url: https://fastparquet.readthedocs.io/en/latest/
 
 extra:
   recipe-maintainers:

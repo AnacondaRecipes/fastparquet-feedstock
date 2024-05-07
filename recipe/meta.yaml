@@ -22,7 +22,6 @@ requirements:
   build:
     - {{ compiler('c') }}
     - git  # [not win]
-    - cython >=0.29.23
   host:
     - python
     - pip

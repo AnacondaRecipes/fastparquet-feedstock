@@ -1,5 +1,5 @@
 {% set name = "fastparquet" %}
-{% set version = "2023.8.0" %}
+{% set version = "2024.2.0" %}
 
 package:
   name: {{ name }}
@@ -7,26 +7,32 @@ package:
 
 source:
   url: https://pypi.io/packages/source/f/{{ name }}/{{ name }}-{{ version  }}.tar.gz
-  sha256: 2ff39bc20869829ea8fd85bf0336c5006d0ffcc276d0de070030cf8ffd929160
+  sha256: 81a8f60c51793eb2436b4fdbbf115ff8578a4a457a179240bc08f9d9573d57a4
 
 build:
   number: 0
   #skip s390x because of lack of cramjam and numba
   skip: true  # [py<38 or s390x]
-  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  script: 
+    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+    # this avoids conflicts with cython built files and allows them to be imported
+    -  mv ./fastparquet ./fastparquet-src
 
 requirements:
   build:
     - {{ compiler('c') }}
     - git  # [not win]
+    - cython >=0.29.23
   host:
     - python
     - pip
     - wheel
     - setuptools
+    - setuptools-scm >1.5.4
     - numpy {{ numpy }}
-    - cython 0.29
+    - cython >=0.29.23
     - pytest-runner
+    - packaging
   run:
     - python
     - {{ pin_compatible('numpy') }}
@@ -36,8 +42,12 @@ requirements:
     - packaging
 
 test:
+  source_files:
+    - fastparquet-src
   imports:
     - fastparquet
+    - fastparquet.cencoding
+    - fastparquet.speedups
   requires:
     - pip
   commands:

@@ -15,7 +15,7 @@ build:
   skip: true  # [py<38 or s390x]
   script: 
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
-    # this avoids conflicts with cython built files and allows them to be imported
+    # this avoids conflicts with cython built files and allows them to be imported during test phase
     -  mv ./fastparquet ./fastparquet-src
 
 requirements:

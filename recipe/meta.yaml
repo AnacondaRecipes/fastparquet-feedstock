@@ -13,8 +13,7 @@ build:
   number: 0
   #skip s390x because of lack of cramjam and numba
   skip: true  # [py<38 or s390x]
-  script: 
-    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   build:

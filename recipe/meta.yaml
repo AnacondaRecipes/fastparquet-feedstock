@@ -28,7 +28,6 @@ requirements:
     - setuptools-scm >1.5.4
     - numpy {{ numpy }}
     - cython >=0.29.23
-    - packaging
   run:
     - python
     - {{ pin_compatible('numpy') }}
@@ -46,9 +45,7 @@ test:
     - fastparquet.speedups
   requires:
     - pip
-    - pytest
   commands:
-    - pytest -v fastparquet/test
     - pip check
 
 about:

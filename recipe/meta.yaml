@@ -37,8 +37,6 @@ requirements:
     - packaging
 
 test:
-  source_files:
-    - fastparquet/test
   imports:
     - fastparquet
     - fastparquet.cencoding

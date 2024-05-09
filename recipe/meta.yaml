@@ -15,8 +15,6 @@ build:
   skip: true  # [py<38 or s390x]
   script: 
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
-    # this avoids conflicts with cython built files and allows them to be imported during test phase
-    -  mv ./fastparquet ./fastparquet-src
 
 requirements:
   build:
@@ -30,7 +28,6 @@ requirements:
     - setuptools-scm >1.5.4
     - numpy {{ numpy }}
     - cython >=0.29.23
-    - pytest-runner
     - packaging
   run:
     - python
@@ -42,14 +39,16 @@ requirements:
 
 test:
   source_files:
-    - fastparquet-src
+    - fastparquet/test
   imports:
     - fastparquet
     - fastparquet.cencoding
     - fastparquet.speedups
   requires:
     - pip
+    - pytest
   commands:
+    - pytest -v fastparquet/test
     - pip check
 
 about:

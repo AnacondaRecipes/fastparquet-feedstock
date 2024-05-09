@@ -1,5 +1,5 @@
 {% set name = "fastparquet" %}
-{% set version = "2023.8.0" %}
+{% set version = "2024.2.0" %}
 
 package:
   name: {{ name }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/f/{{ name }}/{{ name }}-{{ version  }}.tar.gz
-  sha256: 2ff39bc20869829ea8fd85bf0336c5006d0ffcc276d0de070030cf8ffd929160
+  sha256: 81a8f60c51793eb2436b4fdbbf115ff8578a4a457a179240bc08f9d9573d57a4
 
 build:
   number: 0
@@ -24,9 +24,9 @@ requirements:
     - pip
     - wheel
     - setuptools
+    - setuptools-scm >1.5.4
     - numpy {{ numpy }}
-    - cython 0.29
-    - pytest-runner
+    - cython >=0.29.23
   run:
     - python
     - {{ pin_compatible('numpy') }}
@@ -38,6 +38,8 @@ requirements:
 test:
   imports:
     - fastparquet
+    - fastparquet.cencoding
+    - fastparquet.speedups
   requires:
     - pip
   commands:

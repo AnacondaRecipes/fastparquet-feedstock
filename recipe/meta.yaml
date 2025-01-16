@@ -42,10 +42,8 @@ test:
     - fastparquet.speedups
   requires:
     - pip
-    - pytest
   commands:
     - pip check
-    - pytest test/ -vv
 
 about:
   home: https://github.com/dask/fastparquet

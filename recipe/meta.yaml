@@ -45,7 +45,7 @@ test:
     - pytest
   commands:
     - pip check
-    - pytest -vv
+    - pytest test/ -vv
 
 about:
   home: https://github.com/dask/fastparquet

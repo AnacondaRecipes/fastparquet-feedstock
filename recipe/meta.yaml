@@ -11,8 +11,9 @@ source:
 
 build:
   number: 0
-  #skip s390x because of lack of cramjam and numba
-  skip: true  # [py<39 or s390x]
+  # skip s390x because of lack of cramjam and numba
+  # skip py>312 because of cramjam suport for 3.12
+  skip: true  # [py<39 or py>312 or s390x]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:

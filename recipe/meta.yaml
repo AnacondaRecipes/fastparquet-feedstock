@@ -1,5 +1,5 @@
 {% set name = "fastparquet" %}
-{% set version = "2024.2.0" %}
+{% set version = "2024.11.0" %}
 
 package:
   name: {{ name }}
@@ -7,12 +7,12 @@ package:
 
 source:
   url: https://pypi.io/packages/source/f/{{ name }}/{{ name }}-{{ version  }}.tar.gz
-  sha256: 81a8f60c51793eb2436b4fdbbf115ff8578a4a457a179240bc08f9d9573d57a4
+  sha256: e3b1fc73fd3e1b70b0de254bae7feb890436cb67e99458b88cb9bd3cc44db419
 
 build:
   number: 0
-  #skip s390x because of lack of cramjam and numba
-  skip: true  # [py<38 or s390x]
+  # skip s390x because of lack of cramjam and numba
+  skip: true  # [py<39 or s390x]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
@@ -61,6 +61,8 @@ about:
   doc_url: https://fastparquet.readthedocs.io
 
 extra:
+  skip-lints:
+    - invalid_url
   recipe-maintainers:
     - martindurant
     - mrocklin

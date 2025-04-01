@@ -10,7 +10,7 @@ source:
   sha256: e3b1fc73fd3e1b70b0de254bae7feb890436cb67e99458b88cb9bd3cc44db419
 
 build:
-  number: 0
+  number: 1
   # skip s390x because of lack of cramjam and numba
   skip: true  # [py<39 or s390x]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
@@ -52,9 +52,9 @@ about:
   license_file: LICENSE
   summary: 'Python interface to the parquet format'
   description: |
-    The fastparquet is a python implementation of the parquet format, aiming integrate into python-based big data work-flows. 
-    It is used implicitly by the projects Dask, Pandas and intake-parquet. 
-    The Parquet format is a common binary data store, used particularly in the Hadoop/big-data sphere. 
+    The fastparquet is a python implementation of the parquet format, aiming integrate into python-based big data work-flows.
+    It is used implicitly by the projects Dask, Pandas and intake-parquet.
+    The Parquet format is a common binary data store, used particularly in the Hadoop/big-data sphere.
     It provides several advantages relevant to big-data processing.
 
   dev_url: https://github.com/dask/fastparquet

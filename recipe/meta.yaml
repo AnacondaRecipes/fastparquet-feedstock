@@ -1,16 +1,16 @@
 {% set name = "fastparquet" %}
-{% set version = "2024.11.0" %}
+{% set version = "2025.12.0" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/f/{{ name }}/{{ name }}-{{ version  }}.tar.gz
-  sha256: e3b1fc73fd3e1b70b0de254bae7feb890436cb67e99458b88cb9bd3cc44db419
+  url: https://pypi.org/packages/source/f/{{ name }}/{{ name }}-{{ version  }}.tar.gz
+  sha256: 85f807d3846c7691855a68ed7ff6ee40654b72b997f5b1199e6310a1e19d1cd5
 
 build:
-  number: 1
+  number: 0
   # skip s390x because of lack of cramjam and numba
   skip: true  # [py<39 or s390x]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
@@ -22,16 +22,16 @@ requirements:
   host:
     - python
     - pip
-    - wheel
     - setuptools
-    - setuptools-scm >1.5.4
+    - setuptools-scm
     - numpy {{ numpy }}
-    - cython >=0.29.23
+    - cython >=0.29.31
+    - numpy >=2.0.0rc1
   run:
     - python
     - {{ pin_compatible('numpy') }}
     - pandas >=1.5.0
-    - cramjam >=2.3.0
+    - cramjam >=2.3
     - fsspec
     - packaging
 
@@ -50,7 +50,7 @@ about:
   license: Apache-2.0
   license_family: Apache
   license_file: LICENSE
-  summary: 'Python interface to the parquet format'
+  summary: Python interface to the parquet format
   description: |
     The fastparquet is a python implementation of the parquet format, aiming integrate into python-based big data work-flows.
     It is used implicitly by the projects Dask, Pandas and intake-parquet.

@@ -22,6 +22,9 @@ requirements:
   build:
     - {{ stdlib('c') }}
     - {{ compiler('c') }}
+    # build fails at setup.py line 47 with subprocess execution on win
+    # subprocess.call(["git", "status"], stdout=sys.stdout, stderr=sys.stderr)
+    - git  # [win]
   host:
     - python
     - pip

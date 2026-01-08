@@ -12,6 +12,10 @@ source:
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+    - del fastparquet\*.c  # [win]      
+    - rm fastparquet/*.c   # [unix]    
+    - {{ PYTHON }} {{ RECIPE_DIR }}/un_oldest.py
+    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   skip: true  # [py<310]
 
 requirements:

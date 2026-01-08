@@ -11,7 +11,7 @@ source:
 
 build:
   number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  script: 
     - del fastparquet\*.c  # [win]      
     - rm fastparquet/*.c   # [unix]    
     - {{ PYTHON }} {{ RECIPE_DIR }}/un_oldest.py
@@ -53,7 +53,7 @@ about:
   license: Apache-2.0
   license_family: Apache
   license_file: LICENSE
-  summary: 'Python interface to the parquet format'
+  summary: Python interface to the parquet format
   description: |
     The fastparquet is a python implementation of the parquet format, aiming integrate into python-based big data work-flows.
     It is used implicitly by the projects Dask, Pandas and intake-parquet.

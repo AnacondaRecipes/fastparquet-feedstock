@@ -1,22 +1,20 @@
 {% set name = "fastparquet" %}
-{% set version = "2025.12.0" %}
+{% set version = "2026.3.0" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version  }}.tar.gz
-  sha256: 85f807d3846c7691855a68ed7ff6ee40654b72b997f5b1199e6310a1e19d1cd5
+  # https://pypi.org/packages/source/f/fastparquet/fastparquet-2026.3.0.tar.gz doesn't exist
+  url: https://github.com/dask/{{ name }}/archive/refs/tags/{{ version }}.tar.gz
+  sha256: 9a6fa0e1750fa77dc435415116120b5c7c9bfdec2c0b1e6d2c91bee4d5066ed5
 
 build:
   number: 0
-  script: 
-    - del fastparquet\*.c  # [win]      
-    - rm fastparquet/*.c   # [unix]    
-    - {{ PYTHON }} {{ RECIPE_DIR }}/un_oldest.py
-    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   skip: true  # [py<310]
+  script: 
+    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   build:
@@ -24,7 +22,7 @@ requirements:
     - {{ compiler('c') }}
     # build fails at setup.py line 47 with subprocess execution on win
     # subprocess.call(["git", "status"], stdout=sys.stdout, stderr=sys.stderr)
-    - git  # [win]
+    - git  # [win or linux]
   host:
     - python
     - pip

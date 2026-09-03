@@ -11,8 +11,10 @@ source:
   sha256: 9a6fa0e1750fa77dc435415116120b5c7c9bfdec2c0b1e6d2c91bee4d5066ed5
 
 build:
-  number: 0
-  skip: true  # [py<310]
+  number: 1
+  # cramjam 2.12.0 doesn't support Python 310 anymore
+  # https://github.com/milesgranger/cramjam/blob/3b07aadfb13ba03a0b4582f07b3fa0e1f40c94bd/pyproject.toml#L6
+  skip: true  # [py<311]
   script: 
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
@@ -64,8 +66,6 @@ about:
   doc_url: https://fastparquet.readthedocs.io
 
 extra:
-  skip-lints:
-    - invalid_url
   recipe-maintainers:
     - martindurant
     - mrocklin

@@ -26,11 +26,13 @@ requirements:
   host:
     - python
     - pip
+    # upstream source https://github.com/dask/fastparquet/blob/2026.5.0/pyproject.toml
     - setuptools
     - setuptools-scm
     - cython >=0.29.31
     - numpy >=2.0.0rc1
   run:
+    # upstream source https://github.com/dask/fastparquet/blob/2026.5.0/requirements.txt
     - python
     - pandas >=1.5.0
     - numpy
